@@ -30,6 +30,7 @@ async def register_face(
     user_id: str = Form(...),
     image: UploadFile = File(...),
 ):
+    print("REGISTER FACE HIT", user_id, image.filename)
     data = await image.read()
     _validate_upload(image, data)
 
@@ -84,3 +85,8 @@ async def verify_face(
     verified = confidence >= settings.threshold
 
     return {"verified": verified, "confidence": round(confidence, 4)}
+
+@router.get("/")
+def root():
+    return {"status": "Face Verification Service running"}
+
